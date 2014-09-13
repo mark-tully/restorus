@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load bootstrap_pagination %}
+{% for review in reviews %}
+<article class="post animated fadeInLeft animation-delay-8">
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <h3 class="post-title"><a href="{{ review.get_absolute_url }}" class="transition">{{ review.title }}</a></h3>
+        <div class="row">
+          {% if review.image %}
+          <div class="col-lg-6">
+            <img src="{{ MEDIA_URL }}{{ review.image }}" class="img-post img-responsive" alt="{{ review.title }}">
+          </div>
+          {% endif %}
+          <div class="col-lg-6">
+              {% if review.teaser %}
+            <p>{{ review.teaser|safe|linebreaks }}</p>
+              {% else %}
+            <p>{{ review.body|safe|linebreaks|truncatewords_html:50 }}</p>
+              {% endif %}
+          </div>
+        </div>
+    </div>
+      <div class="panel-footer">
+        <div class="row">
+          <div class="col-lg-10 col-md-9 col-sm-8">
+
+          </div>
+            <div class="col-lg-2 col-md-3 col-sm-4">
+              <a href="{{ review.get_absolute_url }}" class="pull-right">Read more &raquo;</a>
+            </div>
+        </div>
+      </div>
+  </div>
+</article>
+{% endfor %}
+
+
+                    <section>
+                    {% bootstrap_paginate reviews range=10 show_prev_next="false" show_first_last="true" %}
+                    </section>
+{% endblock %}

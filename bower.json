@@ -1,0 +1,22 @@
+{
+  "name": "restorus",
+  "version": "3.0.0",
+  "authors": [
+    "Mark Tully"
+  ],
+  "license": "MIT",
+  "homepage": "http://restorus.org",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "static/components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.2.0",
+    "font-awesome": "~4.1.0"
+  }
+}

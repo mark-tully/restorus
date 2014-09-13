@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section>
+                        <h2 class="post-title">{{ review.title }}</h2>
+                        {% if review.image %}<img src="{{ MEDIA_URL }}{{ review.image }}" class="img-post img-responsive align-left" alt="{{ review.title }}">{% endif %}
+{{ review.teaser|safe|linebreaks }}
+<hr>
+{{ review.body|safe|linebreaks }}
+</section>
+{% endblock %}

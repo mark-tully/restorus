@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section>
+                        <h2 class="post-title">{{ post.title }}</h2>
+    <p>{{ post.date|date }}</p>
+
+{{ post.body|safe|linebreaks }}
+</section>
+{% endblock %}

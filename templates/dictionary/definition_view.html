@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section>
+  <h2 class="post-title">{{ definition.title }}</h2>
+  {{ definition.body|safe|linebreaks }}
+</section>
+{% endblock %}

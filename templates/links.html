@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% for link in links %}
+<div class="post animated fadeInLeft animation-delay-8">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <h3 class="post-title"><a href="{{ link.url }}" class="transition">{{ link.title }}</a></h3>
+                            </div>
+                        </div>
+                    </div>
+    {% endfor %}
+{% endblock %}

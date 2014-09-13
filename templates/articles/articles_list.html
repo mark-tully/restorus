@@ -1,0 +1,45 @@
+{% load bootstrap_pagination %}
+{% if articles %}
+{% for article in articles %}
+<article class="post animated fadeInLeft animation-delay-8">
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <h3 class="post-title"><a href="{{ article.get_absolute_url }}" class="transition">{{ article.title }}</a></h3>
+        <div class="row">
+          {% if article.image %}
+          <div class="col-lg-6">
+            <img src="{{ MEDIA_URL }}{{ article.image }}" class="img-post img-responsive" alt="{{ article.title }}">
+          </div>
+          {% endif %}
+          <div class="col-lg-6">
+              {% if article.teaser %}
+            <p>{{ article.teaser|safe|linebreaks }}</p>
+              {% else %}
+            <p>{{ article.body|safe|linebreaks|truncatewords_html:50 }}</p>
+              {% endif %}
+          </div>
+        </div>
+    </div>
+      <div class="panel-footer">
+        <div class="row">
+          <div class="col-lg-10 col-md-9 col-sm-8">
+            <i class="fa fa-clock-o"></i> {{ article.date|date }} <i class="fa fa-user"> </i> {{ article.author.username|capfirst }} <i class="fa fa-folder-open"></i> <a href="{{ article.topic.get_absolute_url }}">{{ article.topic.title|capfirst }}</a>
+          </div>
+            <div class="col-lg-2 col-md-3 col-sm-4">
+              <a href="{{ article.get_absolute_url }}" class="pull-right">Read more &raquo;</a>
+            </div>
+        </div>
+      </div>
+  </div>
+</article>
+{% endfor %}
+
+
+                    <section>
+                    {% bootstrap_paginate articles range=10 show_prev_next="false" show_first_last="true" %}
+                    </section>
+{% else %}
+
+    <p>No articles matched the criteria provided.</p>
+
+{% endif %}

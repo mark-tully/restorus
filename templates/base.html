@@ -1,0 +1,211 @@
+{% load static from staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>{{ title }} - Restorus.org</title>
+
+  <meta name="description" content="{{ description }}" />
+
+    <!-- CSS -->
+  <link href="{% static '/static/components/bootstrap/dist/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static '/static/components/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet">
+  <link href="{% static '/static/css/animate.min.css' %}" rel="stylesheet">
+
+
+    <link href="{% static '/static/css/style.css' %}" rel="stylesheet">
+    <link href="{% static '/static/css/color.css' %}" rel="stylesheet">
+    <link href="{% static '/static/css/restorus-extras.css' %}" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="js/html5shiv.js"></script>
+        <script src="js/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+
+    <div class="boxed animated fadeIn animation-delay-5">
+
+        <header id="header" class="hidden-xs">
+            <div class="container">
+                <div id="header-title">
+                    <h1 class="animated fadeInDown"><a href="/">Restor<span>us</span></a></h1>
+                    <p class="animated fadeInLeft">Conservative authority in a progressively anarchic world.</p>
+                </div>
+
+                <div id="social-header" class="hidden-xs">
+                    <a href="https://twitter.com/RestorusORG" class="social-icon soc-twitter animated fadeInDown animation-delay-1"><i class="fa fa-twitter"></i></a>
+                    <a href="https://plus.google.com/100491456513800091099/about" class="social-icon soc-google-plus animated fadeInDown animation-delay-2"><i class="fa fa-google-plus"></i></a>
+                    <a href="https://github.com/mark-tully/restorus" class="social-icon soc-github animated fadeInDown animation-delay-3"><i class="fa fa-github"></i></a>
+                </div>
+
+                <form id="search-header" class="hidden-xs animated bounceInRight" action="/search/">
+                    <div class="input-group">
+                        {{ search_form.q }}
+                            <span class="input-group-btn">
+                                <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                            </span>
+                    </div><!-- /input-group -->
+                </form>
+            </div> <!-- container -->
+        </header> <!-- header -->
+
+        <nav class="navbar navbar-static-top navbar-mind" role="navigation">
+            <div class="container">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <a class="navbar-brand visible-xs" href="index.html">Restor<span>us</span></a>
+
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-mind-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <i class="fa fa-bars fa-inverse"></i>
+                    </button>
+                </div>
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse navbar-mind-collapse">
+                    <ul class="nav navbar-nav">
+                        <li>
+                            <a href="/">Home</a>
+                        </li>
+                        <li>
+                            <a href="/articles/politics/">Politics</a>
+                        </li>
+                        <li>
+                            <a href="/articles/religion">Religion</a>
+                        </li>
+                        <li class="dropdown show-on-hover">
+                            <a href="#" class="dropdown-toggle">Cultural Topics<b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/articles/culture/">Culture</a></li>
+                                <li><a href="/articles/arts/">Arts</a></li>
+                                <li><a href="/articles/customs/">Customs</a></li>
+                                <li><a href="/articles/tradition/">Tradition</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="dropdown show-on-hover">
+                            <a href="#" class="dropdown-toggle">Scientific Topics<b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/articles/science/">Science</a></li>
+                                <li><a href="/articles/philosophy">Philosophy</a></li>
+                                <li><a href="/articles/jurisprudence/">Jurisprudence</a></li>
+                                <li><a href="/articles/economics/">Economics</a></li>
+                                <li><a href="/articles/climate/">Climate</a></li>
+                            </ul>
+                        </li>
+
+                        <li>
+                            <a href="/studies/">Studies</a>
+                        </li>
+
+                        <li>
+                            <a href="/reviews/">Reviews</a>
+                        </li>
+                        <li>
+                            <a href="/dictionary/">Dictionary</a>
+                        </li>
+
+                        <li>
+                            <a href="/sites-of-interest/">Sites of Interest</a>
+                        </li>
+
+                    </ul>
+                </div><!-- navbar-collapse -->
+            </div> <!-- container -->
+        </nav> <!-- navbar navbar-default -->
+
+ <header class="wrap-title">
+            <div class="container">
+                <h1 class="page-title">{{ site_name }}</h1>
+
+                {% block breadcrumb %}{% endblock %}
+            </div>
+        </header>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+
+                    {% block content %}{% endblock %}
+
+                </div> <!-- col-md-8 -->
+
+                {% include 'sidebar.html' %}
+
+            </div> <!-- row -->
+        </div> <!-- container  -->
+
+        <aside id="footer-widgets">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4">
+                        <h3 class="footer-widget-title">Sitemap</h3>
+                        <ul class="list-unstyled three_cols">
+                            <li><a href="{% url 'index_page' %}">Home</a></li>
+                            <li><a href="/articles/politics/">Politics</a></li>
+                            <li><a href="/articles/religion/">Religion</a></li>
+                            <li><a href="/articles/culture/">Culture</a></li>
+                            <li><a href="/articles/arts/">Arts</a></li>
+                            <li><a href="/articles/customs/">Customs</a></li>
+                            <li><a href="/articles/tradition/">Tradition</a></li>
+                            <li><a href="/articles/science/">Science</a></li>
+                            <li><a href="/articles/philosophy/">Philosophy</a></li>
+                            <li><a href="/articles/jurisprudence/">Jurisprudence</a></li>
+                            <li><a href="/articles/economics/">Economics</a></li>
+                            <li><a href="/articles/climate/">Climate</a></li>
+                            <li><a href="{% url 'links_page' %}">Sites of Interest</a></li>
+                            <li><a href="/blog/">Site Blog</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="footer-widget">
+                            <h3 class="footer-widget-title">Recent Dictionary Terms</h3>
+                            <div class="media">
+                                <div class="media-body">
+                                    {% for definition in recent_definitions %}
+                                    <h4 class="media-heading"><a href="{{ definition.get_absolute_url }}">{{ definition.title }}</a></h4>
+                                    {% endfor %}
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="footer-widget">
+                            <h3 class="footer-widget-title">Recommended Reading</h3>
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-sm-3 col-xs-6">
+                                    {% for article in sticky_articles %}
+                                    <h4 class="media-heading"><a href="{{ article.get_absolute_url }}">{{ article.title }}</a></h4>
+                                    {% endfor %}
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div> <!-- row -->
+            </div> <!-- container -->
+        </aside> <!-- footer-widgets -->
+
+        <footer id="footer">
+            <p>&copy; 2010-Present <a href="/">Restorus</a>. All rights reserved.</p>
+        </footer>
+
+    </div> <!-- boxed -->
+
+    <!-- Scripts -->
+    <script src="{% static '/static/components/jquery/dist/jquery.min.js' %}"></script>
+    <script src="{% static '/static/components/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+    <script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
+
+
+
+</body>
+
+</html>

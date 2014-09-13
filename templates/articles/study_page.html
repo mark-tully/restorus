@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section>
+                        <h2 class="post-title">{{ study.title }}</h2>
+                        {% if study.image %}<img src="{{ MEDIA_URL }}{{ study.image }}" class="img-post img-responsive align-left" alt="{{ study.title }}">{% endif %}
+{{ study.teaser|safe|linebreaks }}
+<hr>
+{{ study.body|safe|linebreaks }}
+</section>
+{% endblock %}
