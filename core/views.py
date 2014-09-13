@@ -9,7 +9,7 @@ def index_page(request):
     title = 'Conservative Blog & News'
     description = 'Restorus.org is a right wing conservative news blog aimed at providing commentary on classical and current issues.'
     articles_list = Article.objects.all().order_by('-date')
-    paginator = Paginator(articles_list, 2)
+    paginator = Paginator(articles_list, 10)
     page = request.GET.get('page')
     try:
         articles = paginator.page(page)
