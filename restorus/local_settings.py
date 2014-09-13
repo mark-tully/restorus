@@ -1,5 +1,5 @@
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '7z4%tgfe7fds83-gji_+1mv)m_0x%1_oxz@+n^u0w)4+ul#1%@'
+SECRET_KEY = 'l)k#x&#3d%r746samad9*$=wo&#8(l0=#wha2x^oe$v%_44+)d'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -13,7 +13,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'restorusdb',
         'USER': 'restorusdb',
-        'PASSWORD': 'n30h0bb1t-',
+        'PASSWORD': 'gildah4mf4st-',
         'HOST': 'localhost'
     }
 }

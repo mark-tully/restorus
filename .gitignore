@@ -62,6 +62,7 @@ target/
 *.html~
 *.py~
 restorus_pid
+local_settings.py
 .idea
 media/
 static/components/
