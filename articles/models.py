@@ -3,7 +3,6 @@ import os
 
 from django.db import models
 from django.contrib.auth.models import User
-from django.utils.encoding import python_2_unicode_compatible
 
 from djorm_pgfulltext.models import SearchManager
 from djorm_pgfulltext.fields import VectorField
@@ -22,7 +21,6 @@ def review_upload_path_handler(instance, filename):
     return os.path.join('review_%s' % instance.slug, filename)
 
 
-@python_2_unicode_compatible
 class Tag(models.Model):
     title = models.CharField(max_length=125, unique=True)
     slug = models.SlugField(max_length=125, blank=True)
@@ -39,7 +37,6 @@ class Tag(models.Model):
         return '/tag/%s/' % (self.slug,)
         
 
-@python_2_unicode_compatible
 class Topic(models.Model):
     title = models.CharField(max_length=75, unique=True)
     slug = models.SlugField(max_length=125, blank=True)
@@ -57,7 +54,6 @@ class Topic(models.Model):
         return '/articles/%s/' % (self.slug,)
 
 
-@python_2_unicode_compatible
 class Article(models.Model):
     title = models.CharField(max_length=125)
     teaser = models.TextField(blank=True, null=True)
@@ -91,7 +87,6 @@ class Article(models.Model):
         return '/articles/%s/%s/' % (self.topic.slug, self.slug)
 
 
-@python_2_unicode_compatible
 class Review(models.Model):
     title = models.CharField(max_length=125)
     description = models.TextField()
@@ -115,7 +110,6 @@ class Review(models.Model):
         return '/reviews/%s/' % (self.slug,)
 
 
-@python_2_unicode_compatible
 class Study(models.Model):
     title = models.CharField(max_length=125)
     description = models.TextField()
