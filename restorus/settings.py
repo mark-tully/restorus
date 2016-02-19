@@ -2,9 +2,10 @@ import os
 
 # Django settings for restorus project.
 
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 ADMINS = (
-    # ('Your Name', 'your_email@example.com'),
+    ('Mark Tully', 'mark.tully@restorus.org'),
 )
 
 MANAGERS = ADMINS
@@ -67,28 +68,6 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 )
 
-
-# List of callables that know how to import templates from various sources.
-TEMPLATE_LOADERS = (
-    'django.template.loaders.filesystem.Loader',
-    'django.template.loaders.app_directories.Loader',
-)
-
-# be very careful! do not declare too many globals or something might break
-TEMPLATE_CONTEXT_PROCESSORS = (
-    'django.core.context_processors.request',
-    'django.contrib.auth.context_processors.auth',
-    'django.core.context_processors.debug',
-    'django.core.context_processors.i18n',
-    'django.core.context_processors.media',
-    'restorus.context_processors.site_name',
-    'restorus.context_processors.MEDIA_URL',
-    'restorus.context_processors.recent_definitions',
-    'restorus.context_processors.tags_list',
-    'restorus.context_processors.sticky_definitions',
-    'restorus.context_processors.search_form_processor',
-)
-
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -97,6 +76,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.contrib.redirects.middleware.RedirectFallbackMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
 
 ROOT_URLCONF = 'restorus.urls'
@@ -104,9 +84,6 @@ ROOT_URLCONF = 'restorus.urls'
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'restorus.wsgi.application'
 
-TEMPLATE_DIRS = (
-    (os.path.join(os.path.dirname(__file__), '../templates').replace('\\','/'),)
-)
 
 INSTALLED_APPS = (
     'django.contrib.auth',
@@ -116,23 +93,15 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.redirects',
-    'grappelli',
     'django.contrib.admin',
     'django_extensions',
-    'django_nose',
     'bootstrap_pagination',
+    'debug_toolbar',
     'core',
     'articles',
     'dictionary',
 )
 
-TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
-
-# Tell nose to measure coverage on apps
-NOSE_ARGS = [
-    '--with-coverage',
-    '--cover-package=core,articles,dictionary',
-]
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
@@ -165,7 +134,6 @@ LOGGING = {
 
 # debug
 DEBUG = True
-TEMPLATE_DEBUG = DEBUG
 ALLOWED_HOSTS = []
 
 # data
@@ -184,15 +152,29 @@ DATABASES = {
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = 'restorus-secret'
 
-INSTALLED_APPS += (
-    'debug_toolbar',
-)
-
-MIDDLEWARE_CLASSES += (
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
-)
-
 DEBUG_TOOLBAR_PATCH_SETTINGS = False
+
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+                'restorus.context_processors.site_name',
+                'restorus.context_processors.MEDIA_URL',
+                'restorus.context_processors.recent_definitions',
+                'restorus.context_processors.tags_list',
+                'restorus.context_processors.sticky_definitions',
+                'restorus.context_processors.search_form_processor',
+            ],
+        },
+    },
+]
 
 try:
     from local_settings import *

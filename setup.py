@@ -2,21 +2,7 @@ from setuptools import setup, find_packages
 
 
 requires = [
-    'django',
-    'django-debug-toolbar',
-    'nose',
-    'django-nose',
-    'coverage',
-    'django_coverage',
-    'psycopg2',
-    'django_extensions',
-    'pillow',
-    'django-bootstrap-pagination',
-    'djorm-ext-pgfulltext',
-    'six',
-    'django-grappelli',
-    'beautifulsoup4',
-    'lxml',
+
 ]
 
 setup(name='restorus',

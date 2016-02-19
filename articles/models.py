@@ -2,12 +2,12 @@ import datetime
 import os
 
 from django.db import models
-from django.utils.text import slugify
 from django.contrib.auth.models import User
 from django.utils.encoding import python_2_unicode_compatible
 
 from djorm_pgfulltext.models import SearchManager
 from djorm_pgfulltext.fields import VectorField
+from slugify import slugify
 
 
 def article_upload_path_handler(instance, filename):
@@ -50,7 +50,7 @@ class Topic(models.Model):
     
     def save(self, *args, **kwargs):
         if not self.id or self.slug:
-            self.slug = slugify(self.title)
+            self.slug = slugify(self.title, to_lower=True)
         super(Topic, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
@@ -63,7 +63,7 @@ class Article(models.Model):
     teaser = models.TextField(blank=True, null=True)
     author = models.ForeignKey(User)
     topic = models.ForeignKey(Topic, blank=True, null=True)
-    tags = models.ManyToManyField(Tag, blank=True, null=True)
+    tags = models.ManyToManyField(Tag, blank=True)
     date = models.DateTimeField(auto_now_add=False, editable=True, blank=True)
     body = models.TextField()
     image = models.ImageField(blank=True, null=True, upload_to=article_upload_path_handler)
@@ -82,7 +82,7 @@ class Article(models.Model):
     
     def save(self, *args, **kwargs):
         if not self.id or self.slug:
-            self.slug = slugify(self.title)
+            self.slug = slugify(self.title, to_lower=True)
         if not self.date:
             self.date = datetime.datetime.now()
         super(Article, self).save(*args, **kwargs)
@@ -108,7 +108,7 @@ class Review(models.Model):
     
     def save(self, *args, **kwargs):
         if not self.id or self.slug:
-            self.slug = slugify(self.title)
+            self.slug = slugify(self.title, to_lower=True)
         super(Review, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
@@ -132,7 +132,7 @@ class Study(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.id or self.slug:
-            self.slug = slugify(self.title)
+            self.slug = slugify(self.title, to_lower=True)
         super(Study, self).save(*args, **kwargs)
 
     def get_absolute_url(self):

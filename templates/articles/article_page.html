@@ -5,8 +5,9 @@
                         <h2 class="post-title">{{ article.title }}</h2>
     {% if article.tags %}{% for tag in article.tags.all %}<a href="{{ tag.get_absolute_url }}" class="label label-default">{{ tag.title }}</a>{% endfor %}{% endif %}
                         {% if article.image %}<img src="{{ MEDIA_URL }}{{ article.image }}" class="img-post img-responsive align-left" alt="{{ article.title }}">{% endif %}
-{{ article.teaser|safe|linebreaks }}
+{% if article.teaser %}{{ article.teaser|safe|linebreaks }}
 <hr>
+{% endif %}
 {{ article.body|safe|linebreaks }}
 </section>
 {% endblock %}
