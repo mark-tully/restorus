@@ -1,0 +1,16 @@
+
+# This manages coverage for tests.
+
+[run]
+branch = True
+source = core,articles,dictionary,search
+
+[report]
+exclude_lines =
+    pragma: no cover
+    def __repr__(self):
+    def __str__(self):
+    def __unicode__(self):
+    raise AssertionError
+    raise NotImplementedError
+    if __name__ == .__main__.:
