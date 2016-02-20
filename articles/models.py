@@ -3,6 +3,7 @@ import os
 
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils import timezone
 
 from djorm_pgfulltext.models import SearchManager
 from djorm_pgfulltext.fields import VectorField
@@ -29,8 +30,8 @@ class Tag(models.Model):
         return '%s' % (self.title,)
     
     def save(self, *args, **kwargs):
-        if not self.id or self.slug:
-            self.slug = slugify(self.title)
+        if not self.id:
+            self.slug = slugify(self.title, to_lower=True)
         super(Tag, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
@@ -46,7 +47,7 @@ class Topic(models.Model):
         return '%s, %s' % (self.title, self.intro,)
     
     def save(self, *args, **kwargs):
-        if not self.id or self.slug:
+        if not self.id:
             self.slug = slugify(self.title, to_lower=True)
         super(Topic, self).save(*args, **kwargs)
 
@@ -68,19 +69,19 @@ class Article(models.Model):
 
     objects = SearchManager(
         fields=('title', 'teaser',),
-        config = 'pg_catalog.english',
-        search_field = 'search_index',
-        auto_update_search_field = True
+        config='pg_catalog.english',
+        search_field='search_index',
+        auto_update_search_field=True
     )
     
     def __str__(self):
         return '%s, %s, %s' % (self.title, self.teaser, self.body,)
     
     def save(self, *args, **kwargs):
-        if not self.id or self.slug:
+        if not self.id:
             self.slug = slugify(self.title, to_lower=True)
         if not self.date:
-            self.date = datetime.datetime.now()
+            self.date = timezone.now()
         super(Article, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
@@ -102,7 +103,7 @@ class Review(models.Model):
                                        self.cta, self.body,)
     
     def save(self, *args, **kwargs):
-        if not self.id or self.slug:
+        if not self.id:
             self.slug = slugify(self.title, to_lower=True)
         super(Review, self).save(*args, **kwargs)
 
@@ -125,7 +126,7 @@ class Study(models.Model):
                                    self.body,)
 
     def save(self, *args, **kwargs):
-        if not self.id or self.slug:
+        if not self.id:
             self.slug = slugify(self.title, to_lower=True)
         super(Study, self).save(*args, **kwargs)
 

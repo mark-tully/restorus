@@ -13,7 +13,11 @@ from bs4 import BeautifulSoup
 from articles.models import Topic, Article
 
 
-class Command(BaseCommand):
+class Command(BaseCommand):  # pragma: no cover
+    """
+    We don't test this; this code was manually verified before deployment,
+    and the command is only called once.
+    """
     help = 'imports the old wordpress content into the shiny django app'
 
     def handle(self, *args, **kwargs):

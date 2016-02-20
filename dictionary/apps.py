@@ -1,5 +1,5 @@
-from django.apps import AppConfig
+from django.apps import AppConfig  # pragma: no cover
 
 
-class DictionaryConfig(AppConfig):
+class DictionaryConfig(AppConfig):  # pragma: no cover
     name = 'dictionary'
