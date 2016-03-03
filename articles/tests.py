@@ -155,3 +155,175 @@ class ArticleModelTest(TestCase):
         self.assertIn(self.tag, article.tags.all())
         self.assertEquals(article.topic.title, 'Foobar')
         self.assertEquals(article.get_absolute_url(), '/articles/foobar/article-title/')
+
+
+class TestTopicView(TestCase):
+
+    def _create_topic(self):
+        topic = Topic.objects.create(title='Topic', intro='About the topic')
+        topic.save()
+        return topic
+
+    def setUp(self):
+        self.topic = self._create_topic()
+        self.client = Client()
+
+    def test_correct_view(self):
+        response = self.client.get('/articles/topic/')
+        self.assertEquals(response.status_code, 200)
+        self.assertEquals(response.context['title'], 'Topic Articles')
+        self.assertEquals(response.context['description'], 'Read articles about Topic on Restorus.org')
+
+    def test_pagination_view(self):
+        response = self.client.get('/articles/topic/?page=57')
+        self.assertEquals(response.status_code, 200)
+
+
+class TestTagView(TestCase):
+
+    def _create_tag(self):
+        tag = Tag.objects.create(title='Test Tag')
+        tag.save()
+        return tag
+
+    def setUp(self):
+        self.tag = self._create_tag()
+        self.client = Client()
+
+    def test_correct_view(self):
+        response = self.client.get('/tag/test-tag/')
+        self.assertEquals(response.status_code, 200)
+        self.assertEquals(response.context['title'], 'Test Tag Articles')
+
+    def test_pagination_view(self):
+        response = self.client.get('/tag/test-tag/?page=57')
+        self.assertEquals(response.status_code, 200)
+
+
+class TestArticleView(TestCase):
+
+    def setUp(self):
+        user = User.objects.create_user(username='mark', email='mark@example.com', password='password')
+        user.save()
+        topic = Topic.objects.create(title='Foobar', intro='About foobar')
+        tag = Tag.objects.create(title='Tag')
+        topic.save()
+        tag.save()
+        self.user = user
+        self.tag = tag
+        self.topic = topic
+        self.client = Client()
+
+    def _create_article(self):
+        article = Article.objects.create(title='Article Title', teaser='Teaser', author=self.user,
+                                         topic=self.topic, body='Body')
+        article.tags.add(self.tag)
+        article.save()
+        return article
+
+    def test_successful_vars(self):
+        self._create_article()
+        response = self.client.get('/articles/foobar/article-title/')
+        self.assertEquals(response.status_code, 200)
+        self.assertEquals(response.context['title'], 'Article Title')
+
+    def test_failing_vars(self):
+        self._create_article()
+        response = self.client.get('/articles/foobar/article-title/')
+        self.assertNotEquals(response.status_code, 404)
+        self.assertNotEquals(response.context['title'], 'Other')
+
+
+class TestReviewsPage(TestCase):
+
+    def setUp(self):
+        user = User.objects.create_user(username='mark', email='mark@example.com', password='password')
+        user.save()
+        self.user = user
+        self.client = Client()
+
+    def _create_review(self):
+        review = Review.objects.create(title='Review', description='What we review',
+                                       author=self.user, teaser='Teaser', cta='http://restorus.org',
+                                       body='Body')
+        review.save()
+        return review
+
+    def test_successful_vars(self):
+        self._create_review()
+        response = self.client.get('/reviews/review/')
+        self.assertEquals(response.status_code, 200)
+        self.assertEquals(response.context['title'], 'Review')
+
+    def test_failing_vars(self):
+        self._create_review()
+        response = self.client.get('/reviews/review/')
+        self.assertNotEquals(response.status_code, 404)
+        self.assertNotEquals(response.context['title'], 'Other')
+
+
+class TestReviewIndexView(TestCase):
+
+    def setUp(self):
+        self.client = Client()
+
+    def test_successful_vars(self):
+        response = self.client.get('/reviews/')
+        self.assertEquals(response.status_code, 200)
+        self.assertEquals(response.context['title'], 'Book & Product Reviews')
+
+    def test_failing_vars(self):
+        response = self.client.get('/reviews/')
+        self.assertNotEquals(response.status_code, 404)
+        self.assertNotEquals(response.context['title'], 'Other')
+
+    def test_pagination(self):
+        response = self.client.get('/reviews/?page=57')
+        self.assertEquals(response.status_code, 200)
+
+
+class TestStudyView(TestCase):
+
+    def setUp(self):
+        user = User.objects.create_user(username='mark', email='mark@example.com', password='password')
+        user.save()
+        self.user = user
+        self.client = Client()
+
+    def _create_study(self):
+        study = Study.objects.create(title='Study', description='Description', author=self.user,
+                                     teaser='Teaser', body='Body')
+        study.save()
+        return study
+
+    def test_successful_vars(self):
+        self._create_study()
+        response = self.client.get('/study/study/')
+        self.assertEquals(response.status_code, 200)
+        self.assertEquals(response.context['title'], 'Study')
+
+    def test_failing_vars(self):
+        self._create_study()
+        response = self.client.get('/study/study/')
+        self.assertNotEquals(response.status_code, 404)
+        self.assertNotEquals(response.context['title'], 'Other')
+
+
+class TestStudyIndexView(TestCase):
+
+    def setUp(self):
+        self.client = Client()
+
+    def test_successful_vars(self):
+        response = self.client.get('/studies/')
+        self.assertEquals(response.status_code, 200)
+        self.assertEquals(response.context['title'], 'In-Depth Studies')
+
+    def test_failing_vars(self):
+        response = self.client.get('/studies/')
+        self.assertNotEquals(response.status_code, 404)
+        self.assertNotEquals(response.context['title'], 'Articles')
+
+    def test_pagination(self):
+        response = self.client.get('/studies/?page=57')
+        self.assertEquals(response.status_code, 200)

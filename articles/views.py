@@ -42,10 +42,12 @@ def tag_view(request, slug):
 
 def article_page(request, topic, slug):
     article = get_object_or_404(Article, slug=slug)
+    title = article.title
+    description = article.teaser
     topic = article.topic.slug
     return render_to_response('articles/article_page.html',
-                              RequestContext(request, {'title': article.title, 'description': article.teaser,
-                                                       'article': article}))
+                              RequestContext(request, {'title': title, 'description': description,
+                                                       'article': article, 'topic': topic}))
 
 
 def reviews_view(request):

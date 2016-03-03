@@ -10,7 +10,7 @@ def search_page(request):
     articles = []
     show_results = False
     form = SearchForm()
-    if request.GET.has_key('q'):
+    if 'q' in request.GET:
         show_results = True
         query = request.GET['q'].strip()
         if query:
