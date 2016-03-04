@@ -38,6 +38,14 @@ default:
 	mkdir assets
 	mkdir media
 
+	# ###########
+	# # TEST DB #
+	# ###########
+
+	sudo su - postgres
+	createdb restorus
+	createuser -P -s restorus
+
 	# ####################
 	# BOWER REQUIREMENTS #
 	# ####################
