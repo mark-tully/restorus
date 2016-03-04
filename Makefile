@@ -1,6 +1,7 @@
 LIST = build-essential gcc libxml2 python-dev python3-dev python-pip \
 git nginx redis-server python-software-properties nodejs python-virtualenv \
-postgresql postgresql-contrib postgresql-server-dev-9.3 libpq-dev libjpeg-dev
+postgresql postgresql-contrib postgresql-server-dev-9.3 libpq-dev libjpeg-dev \
+libxslt1-dev
 
 default:
 	# ####################################
@@ -38,14 +39,6 @@ default:
 	mkdir assets
 	mkdir media
 
-	# ###########
-	# # TEST DB #
-	# ###########
-
-	sudo su - postgres
-	createdb restorus
-	createuser -P -s restorus
-
 	# ####################
 	# BOWER REQUIREMENTS #
 	# ####################
@@ -60,14 +53,10 @@ default:
 	sudo ln -s /etc/nginx/sites-available/restorus.conf /etc/nginx/sites-enabled/restorus.conf
 	sudo service nginx restart
 
-	# ###########
-	# RUN TESTS #
-	# ###########
-
-	../bin/python manage.py test
-
-	# ###################################
-	# MAKE COMPLETE, HAVE A NICE DAY.   #
-	# IT IS RECOMMENDED THAT YOU REBOOT #
-	# BEFORE RUNNING THE APPLICATION    #
-	# ###################################
+	# #######################################
+	# MAKE COMPLETE, HAVE A NICE DAY.       #
+	# IT IS RECOMMENDED THAT YOU REBOOT     #
+	# BEFORE RUNNING THE APPLICATION.       #
+	# YOU ALSO NEED TO CONFIGURE A DATABASE #
+	# AND RUN TESTS.                        #
+	# #######################################
