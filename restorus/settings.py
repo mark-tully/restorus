@@ -94,6 +94,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.redirects',
     'django.contrib.admin',
+    'django.contrib.sitemaps',
     'django_extensions',
     'bootstrap_pagination',
     'debug_toolbar',

@@ -1,15 +1,29 @@
 from django.conf.urls import include, url
 from django.contrib import admin
+from django.contrib.sitemaps import views
 
 import core.views
+from core.views import ArticleSitemap, StudySitemap, ReviewSitemap, TopicSitemap, TagSitemap
 import dictionary.views
 import articles.views
 import search.views
 
 admin.autodiscover()
 
+sitemaps = {
+    'articles': ArticleSitemap,
+    'studies': StudySitemap,
+    'reviews': ReviewSitemap,
+    'topics': TopicSitemap,
+    'tags': TagSitemap
+}
+
 urlpatterns = [
+    # core, including sitemaps
     url(r'^$', core.views.index_page, name='index_page'),
+    url(r'^robots\.txt$', core.views.robots_txt, name='robots_txt'),
+    url(r'sitemap\.xml$', views.index, {'sitemaps': sitemaps}),
+    url(r'^sitemap-(?P<section>.+)\.xml$', views.sitemap, {'sitemaps': sitemaps}),
 
     # dictionary
 

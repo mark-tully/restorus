@@ -1,8 +1,9 @@
-from django.shortcuts import render_to_response, RequestContext, get_object_or_404
+from django.shortcuts import render_to_response, RequestContext, get_object_or_404, render
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.contrib.sitemaps import Sitemap
 
 from core.models import Link, BlogPost
-from articles.models import Article
+from articles.models import Article, Topic, Tag, Study, Review
 
 
 def index_page(request):
@@ -59,3 +60,47 @@ def blog_post(request, slug):
                               RequestContext(request,
                                   {'title': title, 'description': description,
                                    'post': post}))
+
+
+def robots_txt(request):
+    return render(request, template_name='robots.txt', content_type='text/plain')
+
+
+class ArticleSitemap(Sitemap):
+    changefreq = 'weekly'
+    priority = 0.6
+
+    def items(self):
+        return Article.objects.all()
+
+
+class TopicSitemap(Sitemap):
+    changefreq = 'daily'
+    priority = 0.9
+
+    def items(self):
+        return Topic.objects.all()
+
+
+class TagSitemap(Sitemap):
+    changefreq = 'daily'
+    priority = 0.8
+
+    def items(self):
+        return Tag.objects.all()
+
+
+class StudySitemap(Sitemap):
+    changefreq = 'weekly'
+    priority = 0.7
+
+    def items(self):
+        return Study.objects.all()
+
+
+class ReviewSitemap(Sitemap):
+    changefreq = 'weekly'
+    priority = 0.7
+
+    def items(self):
+        return Review.objects.all()
