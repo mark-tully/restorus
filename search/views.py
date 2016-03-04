@@ -15,9 +15,7 @@ def search_page(request):
         query = request.GET['q'].strip()
         if query:
             form = SearchForm({'q': query})
-            articles_list = Article.objects.search(query,
-                                                    fields=('title', 'teaser',
-                                                            'body'))
+            articles_list = Article.objects.search(query, fields=('title', 'teaser', 'body'))
             paginator = Paginator(articles_list, 10)
             page = request.GET.get('page')
             try:
