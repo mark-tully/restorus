@@ -1,5 +1,5 @@
 LIST = build-essential gcc libxml2 python-dev python3-dev python-pip \
-git nginx redis-server python-software-properties nodejs virtualenv \
+git nginx redis-server python-software-properties nodejs python-virtualenv \
 postgresql postgresql-contrib
 
 default:
