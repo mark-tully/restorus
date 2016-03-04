@@ -28,7 +28,7 @@ default:
 	# VIRTUALENV #
 	# ############
 
-	virtualenv -p /usr/bin/python3 .
+	virtualenv -p /usr/bin/python3 ../
 
 	# #############################
 	# # LOCAL PYTHON REQUIREMENTS #
